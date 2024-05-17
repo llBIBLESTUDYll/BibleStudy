@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Import the screens
 import SplashScreen from './screens/SplashScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SessionStackScreen from './screens/SessionStackScreen';
 import QuestionScreen from './screens/QuestionScreen';
@@ -13,15 +15,25 @@ import QuestionScreen from './screens/QuestionScreen';
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const SplashStack = createStackNavigator(); 
 const AuthStack = createStackNavigator(); 
 
 //Authorisation Stack
+const SplashStackScreen = () => {
+  return (
+    <SplashStack.Navigator>
+      <Tab.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+    </SplashStack.Navigator>
+  );
+}
+
 const AuthStackScreen = () => {
-return (
-  <AuthStack.Navigator>
-    <Tab.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
-  </AuthStack.Navigator>
-);
+  return (
+    <AuthStack.Navigator>
+      <Tab.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+      <Tab.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+    </AuthStack.Navigator>
+  )
 }
 
 //Main Stack
@@ -60,7 +72,8 @@ return (
 const App = () => {
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="Auth">
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen name="Splash" component={SplashStackScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Auth" component={AuthStackScreen} options={{ headerShown: false }}/>
       <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }}/>
     </Stack.Navigator>

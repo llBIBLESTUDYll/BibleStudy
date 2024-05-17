@@ -34,7 +34,7 @@ const SplashScreen = ({ navigation }) => {
               if (finished) {
                 navigation.reset({
                   index: 0,
-                  routes: [{ name: "Tab" }],
+                  routes: [{ name: "Auth" }],
                 });
               }
             });

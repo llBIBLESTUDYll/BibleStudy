@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     TextInput,
     Alert,
+    ActivityIndicator
 } from "react-native";
 import axios from "axios";
 import Constants from 'expo-constants';
@@ -185,7 +186,7 @@ const CreateSessionScreen = ({ navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={handleCreateSession}>
                     <Text style={styles.buttonText}>Create Session</Text>
                 </TouchableOpacity>
-
+                {isLoading && <ActivityIndicator animating = {true} size="small" color="#fff" />}
             </View>
         );
     };
