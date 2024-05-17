@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const BibleStudySessionScreen = ({ route }) => {
-  const { questions } = route.params;
+const BibleStudySessionScreen = ( props ) => {
+  const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions.BibleStudy ? props.route.params.questions.BibleStudy : props.route.params.questions;
+  console.log("this is props" ,props, BibleStudyQuestions, biblestudyquestions, Questions, questions);
+  let restion = BibleStudyQuestions ? BibleStudyQuestions : biblestudyquestions ? biblestudyquestions : Questions ? Questions : questions ? questions : null;
+  restion = restion.map(item => {
+    item.question = item.question ? item.question : item.title ? item.title : item.Question;
+    item.verses = item.Verses ? item.Verses : item.verses;
+    return item; 
+  })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [expandedVerseIndex, setExpandedVerseIndex] = useState(null);
 
@@ -19,25 +26,25 @@ const BibleStudySessionScreen = ({ route }) => {
 
       {/* Header */}
       <Text style={styles.header}>
-        QUESTION {currentQuestionIndex + 1}/{questions.length}
+        QUESTION {currentQuestionIndex + 1}/{restion.length}
       </Text>
 
       {/* Current Question */}
       <View style={styles.questionBox}>
         <Text style={styles.questionText}>
-          {questions[currentQuestionIndex].question}
+          {restion[currentQuestionIndex].question}
         </Text>
       </View>
 
       {/* Verses List */}
-      {questions[currentQuestionIndex].verses.map((verse, index) => (
+      {restion[currentQuestionIndex].verses.map((verse, index) => (
         <TouchableOpacity 
           key={index} 
           style={styles.verseBox}
           onPress={() => handleVersePress(index)}
         >
           <Text style={styles.verseTitle}>
-            {verse.title}
+            {verse.reference}
           </Text>
           {expandedVerseIndex === index && (
             <Text style={styles.verseText}>
@@ -58,7 +65,7 @@ const BibleStudySessionScreen = ({ route }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.navButton}
-          disabled={currentQuestionIndex === questions.length - 1}
+          disabled={currentQuestionIndex === restion.length - 1}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         >
           <Text style={styles.navButtonText}>Next</Text>

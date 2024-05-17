@@ -70,16 +70,28 @@ const CreateSessionScreen = ({ navigation }) => {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${Constants.expoConfig.extra.openAIKey}`,
+                        'Access-Control-Allow-Headers':
+                        'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                        'Access-Control-Allow-Methods': 'OPTIONS,POST',
+                        'Access-Control-Allow-Credentials': true,
+                        'Access-Control-Allow-Origin': '*',
+                        'X-Requested-With': '*',
+                        Authorization: `Bearer sk-proj-vEC7LFZKrZmlyJwOUwMeT3BlbkFJXI6I5oxlbNddcqP46ayg`,
                     },
                 }
             );
             // Assuming API call succeeded and you got the response
             // Extract and navigate with the question data
-            const question_data = completion.data.choices[0].message.content;
-            if (isMounted) {
+            const question_data = JSON.parse(completion.data.choices[0].message.content);
+            //completion.data.choices[0].message.content;
+            if (isMounted && (!question_data.error && !question_data.Error) ) {
                 navigation.navigate("ActiveSession", { questions: question_data });
                 setIsLoading(false);
+            }
+            if(isMounted && (question_data.error || question_data.Error)) {
+                let errorMessage = question_data.error;
+                setError(errorMessage);
+                Alert.alert("Error", errorMessage);
             }
         } catch (e) {
             // Handle any errors that occur during session creation
@@ -113,6 +125,7 @@ const CreateSessionScreen = ({ navigation }) => {
                 setIsLoading(false);
             }
         };
+    }
         return (
 
             <View style={styles.container}>

@@ -46,8 +46,8 @@ return (
       },
     })}
     tabBarOptions={{
-      activeTintColor: 'dark gray',
-      inactiveTintColor: 'gray',
+      activeTintColor: 'dark grey',
+      inactiveTintColor: 'grey',
     }}
   >
     <Tab.Screen name="Study Session" component={SessionStackScreen} options={{ headerShown: false }} />

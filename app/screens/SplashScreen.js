@@ -14,12 +14,12 @@ const SplashScreen = ({ navigation }) => {
     const sequence = Animated.sequence([
       Animated.timing(length, {
         toValue: 1,
-        duration: 1500,
+        duration: 150,
         useNativeDriver: false,
       }),
       Animated.timing(length, {
         toValue: 0,
-        duration: 1500,
+        duration: 150,
         useNativeDriver: false,
       }),
     ]);
