@@ -20,6 +20,7 @@ const RegisterScreen = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.welcomeMessage}>Welcom to Bible Study!</Text>
       <TextInput
         value={email}
         onChangeText={setEmail}
@@ -52,7 +53,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    paddingTop: 100,
     padding: 10,
+  },
+  welcomeMessage: {
+    fontSize: 24,
+    textAlign: 'center',
+    margin: 20,
   },
   input: {
     paddingVertical: 4,
@@ -64,6 +71,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
     button: {
+    marginHorizontal: 20,
     backgroundColor: '#444444',
     padding: 15,
     borderRadius: 10,
