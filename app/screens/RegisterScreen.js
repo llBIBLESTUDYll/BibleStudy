@@ -7,6 +7,7 @@ import {
   Text,
   ActivityIndicator,
   } from 'react-native';
+import { Auth } from 'aws-amplify';
 
 const RegisterScreen = ({ navigation }) => {
 
@@ -14,13 +15,30 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirm, setconfirm] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = () => {
-    navigation.navigate('Login');
+    setError(null);
+    Auth.signUp({
+      username: email,
+      password: password,
+      attributes: {
+        email: email
+      }
+    })
+    .then(data => {
+      console.log("this is the response data from user register", data)
+      navigation.navigate('Login');
+    })
+    .catch(err => {
+      console.log("this is an error from user pool when register", err)
+      setError(err.message);
+    });
   };
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeMessage}>Welcom to Bible Study!</Text>
+      {error && <Text style={styles.errorMessage}>{error}</Text>}
       <TextInput
         value={email}
         onChangeText={setEmail}
@@ -69,6 +87,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginVertical: 10,
     marginHorizontal: 20,
+    placeholderTextColor: 'grey'
   },
     button: {
     marginHorizontal: 20,
@@ -81,6 +100,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: "center",
   },
 });
 export default RegisterScreen;

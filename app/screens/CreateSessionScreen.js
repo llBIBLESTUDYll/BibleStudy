@@ -209,7 +209,7 @@ const CreateSessionScreen = ({ navigation }) => {
             borderWidth: 1,
             borderRadius: 10,
             paddingLeft: 10,
-            color: "grey",
+            placeholderTextColor: 'grey'
         },
         button: {
             backgroundColor: "#444444",

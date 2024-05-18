@@ -11,7 +11,10 @@ import RegisterScreen from './screens/RegisterScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SessionStackScreen from './screens/SessionStackScreen';
 import QuestionScreen from './screens/QuestionScreen';
+import Amplify from 'aws-amplify';
+import aws_exports from './config/aws_exports';
 
+Amplify.configure(aws_exports);
 // Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

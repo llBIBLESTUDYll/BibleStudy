@@ -7,16 +7,27 @@ import {
   Text,
   ActivityIndicator,
   } from 'react-native';
+import { Auth } from 'aws-amplify';
 
 const LoginScreen = ({ navigation }) => {
 
-  const [question, setQuestion] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = () => {
-    navigation.navigate('Tab');
+    setError(null);
+    Auth.signIn(email, password)
+    .then(user => {
+      console.log("this is user from user pool", user)
+      navigation.navigate('Tab');
+      //navigation.navigate('Main');
+    })
+    .catch(err => {
+      console.log("this is an error from user pool when login", err)
+      setError(err.message);
+    });    
   };
 
   const goToRegister = () => {
@@ -25,6 +36,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeMessage}>Welcom to Bible Study!</Text>
+      {error && <Text style={styles.errorMessage}>{error}</Text>}
       <TextInput
         value={email}
         onChangeText={setEmail}
@@ -68,6 +80,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginVertical: 10,
     marginHorizontal: 20,
+    placeholderTextColor: 'grey'
   },
     button: {
     marginHorizontal: 20,
@@ -90,7 +103,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#0000aa',
     borderBottomWidth: 0.5,
     width: 200
-
-  }
+  },
+  errorMessage: {
+    color: "red",
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: "center",
+  },
 });
 export default LoginScreen;
