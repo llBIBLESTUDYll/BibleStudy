@@ -18,16 +18,19 @@ const LoginScreen = ({ navigation }) => {
 
   const handleSubmit = () => {
     setError(null);
+    setLoading(true);
     Auth.signIn(email, password)
     .then(user => {
+      setLoading(false);
       console.log("this is user from user pool", user)
       navigation.navigate('Tab');
       //navigation.navigate('Main');
     })
     .catch(err => {
+      setLoading(false);
       console.log("this is an error from user pool when login", err)
       setError(err.message);
-    });    
+    });
   };
 
   const goToRegister = () => {

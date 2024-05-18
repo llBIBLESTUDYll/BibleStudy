@@ -25,7 +25,7 @@ const CreateSessionScreen = ({ navigation }) => {
 
     // States to manage API call status
     const [apiResponse, setApiResponse] = useState("");
-    const [isLoading, setIsLoading] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     // Effect hook to manage component mount state
@@ -40,7 +40,7 @@ const CreateSessionScreen = ({ navigation }) => {
     // Handles the form submission, creating a new session
     const handleCreateSession = async () => {
         // Indicate loading and reset error state
-        setIsLoading(true);
+        setLoading(true);
         setError(null);
         let session_focus = ""; // Initialize session focus string
         // Append focus topic to the session focus if provided
@@ -87,13 +87,13 @@ const CreateSessionScreen = ({ navigation }) => {
             //completion.data.choices[0].message.content;
             if (isMounted && (!question_data.error && !question_data.Error) ) {
                 navigation.navigate("ActiveSession", { questions: question_data });
-                setIsLoading(false);
             }
             if(isMounted && (question_data.error || question_data.Error)) {
                 let errorMessage = question_data.error;
                 setError(errorMessage);
                 Alert.alert("Error", errorMessage);
             }
+            setLoading(false);
         } catch (e) {
             // Handle any errors that occur during session creation
             console.log(e);
@@ -123,7 +123,7 @@ const CreateSessionScreen = ({ navigation }) => {
 
             // Ensure we don't set state if the component has unmounted
             if (isMounted) {
-                setIsLoading(false);
+                setLoading(false);
             }
         };
     }
@@ -184,9 +184,10 @@ const CreateSessionScreen = ({ navigation }) => {
 
                 {/* Button to submit the form and create a new session */}
                 <TouchableOpacity style={styles.button} onPress={handleCreateSession}>
+                {loading ? <ActivityIndicator animating = {true} size="small" color="#fff" /> : 
                     <Text style={styles.buttonText}>Create Session</Text>
+                }
                 </TouchableOpacity>
-                {isLoading && <ActivityIndicator animating = {true} size="small" color="#fff" />}
             </View>
         );
     };

@@ -19,6 +19,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleSubmit = () => {
     setError(null);
+    setLoading(true);
     Auth.signUp({
       username: email,
       password: password,
@@ -27,10 +28,12 @@ const RegisterScreen = ({ navigation }) => {
       }
     })
     .then(data => {
+      setLoading(false);
       console.log("this is the response data from user register", data)
       navigation.navigate('Login');
     })
     .catch(err => {
+      setLoading(false);
       console.log("this is an error from user pool when register", err)
       setError(err.message);
     });
