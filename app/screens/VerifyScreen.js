@@ -7,71 +7,61 @@ import {
   Text,
   ActivityIndicator,
   } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 
-const RegisterScreen = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setconfirm] = useState('');
+const VerifyScreen = ({ navigation }) => {
+  const route = useRoute();
+  const email = route.params?.email;
+  const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = () => {
+    console.log("this is navigation form login or register",route)
     setError(null);
     setLoading(true);
-    Auth.signUp({
-      username: email,
-      password: password,
-      attributes: {
-        email: email
-      }
-    })
+    Auth.confirmSignUp(email, code)
     .then(data => {
       setLoading(false);
-      console.log("this is the response data from user register", data)
-      navigation.navigate('Verify', {email});
+      console.log("this is response after email confirmed", data)
+      navigation.navigate('Login');
+      //navigation.navigate('Main');
     })
     .catch(err => {
       setLoading(false);
-      console.log("this is an error from user pool when register", err)
+      console.log("this is an error from confirm email", err)
       setError(err.message);
     });
   };
 
-  const goToLogin = () => {
-    navigation.navigate("Login");
-  }  
+  const resendCode = async () => {
+    try {
+      const data = await Auth.resendSignUp(email);
+      setError("We have resent the verify code to " + data.CodeDeliveryDetails.Destination);
+      console.log('Verification code resent successfully');
+    } catch (error) {
+      console.error('Error resending verification code:', error);
+    }
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeMessage}>Welcom to Bible Study!</Text>
       {error && <Text style={styles.errorMessage}>{error}</Text>}
       <TextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Jhon@gmail.com"
-        style={styles.input}
-      />
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Type a password"
-        style={styles.input}
-      />
-      <TextInput
-        value={confirm}
-        onChangeText={setconfirm}
-        placeholder="Retype a password"
+        value={code}
+        onChangeText={setCode}
+        placeholder="Enter a correct code from your Email"
         style={styles.input}
       />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
       {loading ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>Verify</Text>
       )}
       </TouchableOpacity>
-      <Text style={styles.link} onPress={goToLogin}>To Login</Text>
+      <Text style={styles.link} onPress={resendCode}>Please, send me a verify code again</Text>
     </View>
   );
 };
@@ -86,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     margin: 20,
-  },
+  },  
   input: {
     paddingVertical: 4,
     borderColor: "#444444",
@@ -117,8 +107,8 @@ const styles = StyleSheet.create({
     color: '#0000aa',
     borderBottomColor: '#0000aa',
     borderBottomWidth: 0.5,
-    width: 200
-  },  
+    width: 300
+  },
   errorMessage: {
     color: "red",
     fontSize: 16,
@@ -127,4 +117,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default RegisterScreen;
+export default VerifyScreen;

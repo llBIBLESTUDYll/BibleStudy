@@ -1,0 +1,10 @@
+{
+  "hostType": "lan",
+  "lanType": "ip",
+  "dev": true,
+  "minify": false,
+  "urlRandomness": null,
+  "https": false,
+  "scheme": "exp+snack-c0665a24-1733-4b45-b87e-9bb23f802999",
+  "devClient": false
+}

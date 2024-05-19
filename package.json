@@ -14,7 +14,6 @@
     "axios": "^1.6.7",
     "expo": "^50.0.7",
     "metro-cache": "^0.80.9",
-    "node-fetch": "^3.2.6",
-    "react-native": "0.73.4"
+    "node-fetch": "^3.2.6"
   }
 }

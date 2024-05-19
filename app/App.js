@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import VerifyScreen from './screens/VerifyScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SessionStackScreen from './screens/SessionStackScreen';
 import QuestionScreen from './screens/QuestionScreen';
@@ -35,6 +36,7 @@ const AuthStackScreen = () => {
     <AuthStack.Navigator>
       <Tab.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
       <Tab.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+      <Tab.Screen name='Verify' component={VerifyScreen} options={{ headerShown: false }} />
     </AuthStack.Navigator>
   )
 }

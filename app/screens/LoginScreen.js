@@ -29,7 +29,8 @@ const LoginScreen = ({ navigation }) => {
     .catch(err => {
       setLoading(false);
       console.log("this is an error from user pool when login", err)
-      setError(err.message);
+      if(err.code == 'UserNotConfirmedException') navigation.navigate("Verify", {email});
+      else setError(err.message);
     });
   };
 
@@ -52,14 +53,14 @@ const LoginScreen = ({ navigation }) => {
         placeholder="Enter a correct password"
         style={styles.input}
       />
-      <Text style={styles.link} onPress={goToRegister}>Create New Account</Text>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
       {loading ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
         <Text style={styles.buttonText}>Login</Text>
       )}
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <Text style={styles.link} onPress={goToRegister}>Create New Account</Text>
     </View>
   );
 };
