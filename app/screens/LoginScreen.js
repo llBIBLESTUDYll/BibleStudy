@@ -22,8 +22,8 @@ const LoginScreen = ({ navigation }) => {
     Auth.signIn(email, password)
     .then(user => {
       setLoading(false);
-      console.log("this is user from user pool", user)
       navigation.navigate('Tab');
+      console.log("this is user from user pool", user)
       //navigation.navigate('Main');
     })
     .catch(err => {
@@ -47,7 +47,9 @@ const LoginScreen = ({ navigation }) => {
         placeholder="Jhon@gmail.com"
         style={styles.input}
       />
+
       <TextInput
+        secureTextEntry= {true}
         value={password}
         onChangeText={setPassword}
         placeholder="Enter a correct password"
@@ -60,7 +62,11 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Login</Text>
       )}
       </TouchableOpacity>
-      <Text style={styles.link} onPress={goToRegister}>Create New Account</Text>
+      <View style={{flexDirection: 'row', marginLeft: 30}}>
+        <Text style={styles.state} >Don't you have an account? </Text>
+        <Text style={styles.link} onPress={goToRegister} >Singn Up Now</Text>
+      </View> 
+      
     </View>
   );
 };
@@ -98,16 +104,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
   },
-  link: {
-    marginHorizontal: 20,
+  state: {
     marginVertical: 10,
-    paddingLeft: 10,
     paddingVertical: 4,
-    color: '#0000aa',
+//    color: '#0000aa',
     borderBottomColor: '#0000aa',
-    borderBottomWidth: 0.5,
+//    borderBottomWidth: 0.5,
     width: 200
   },
+  link: {
+    marginVertical: 10,
+    paddingVertical: 4,
+//    borderBottomWidth: 0.5,
+    width: 100
+  },  
   errorMessage: {
     color: "red",
     fontSize: 16,

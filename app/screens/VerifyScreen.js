@@ -104,9 +104,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingLeft: 10,
     paddingVertical: 4,
-    color: '#0000aa',
-    borderBottomColor: '#0000aa',
-    borderBottomWidth: 0.5,
+//    color: '#0000aa',
+//    borderBottomColor: '#0000aa',
+//    borderBottomWidth: 0.5,
     width: 300
   },
   errorMessage: {

@@ -53,12 +53,14 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.input}
       />
       <TextInput
+        secureTextEntry= {true}
         value={password}
         onChangeText={setPassword}
         placeholder="Type a password"
         style={styles.input}
       />
       <TextInput
+        secureTextEntry= {true}
         value={confirm}
         onChangeText={setconfirm}
         placeholder="Retype a password"
@@ -71,7 +73,7 @@ const RegisterScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Register</Text>
       )}
       </TouchableOpacity>
-      <Text style={styles.link} onPress={goToLogin}>To Login</Text>
+      {/*<Text style={styles.link} onPress={goToLogin}>To Login</Text>*/}
     </View>
   );
 };
@@ -114,11 +116,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingLeft: 10,
     paddingVertical: 4,
-    color: '#0000aa',
-    borderBottomColor: '#0000aa',
-    borderBottomWidth: 0.5,
-    width: 200
-  },  
+    justifyContent: 'flex-end',
+    //color: '#0000aa',
+    //borderBottomColor: '#0000aa',
+    //borderBottomWidth: 0.5,
+    width: 100
+  },
   errorMessage: {
     color: "red",
     fontSize: 16,
